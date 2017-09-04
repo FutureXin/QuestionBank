@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_list_l">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>Java</item>
+        <item>JavaEE</item>
+        <item>C</item>
+        <item>C++</item>
+        <item>Objective-C</item>
+        <item>C#</item>
+        <item>.NET</item>
+        <item>Python</item>
+        <item>PHP</item>
+        <item>JavaScript</item>
+        <item>HTML/CSS</item>
+        <item>Servlet/JSP</item>
+        <item>Hadoop</item>
+        <item>Node.js</item>
+        <item>Golang</item>
+        <item>Ruby</item>
+        <item>Delphi</item>
+        <item>Erlang</item>
+        <item>VB</item>
+        <item>Perl</item>
+        <item>Swift</item>
+        <item>Linux</item>
+        <item>Database</item>
+        <item>Testing Theory</item>
+        <item>Automated Test</item>
+        <item>Performance Test</item>
+        <item>Operations</item>
+        <item>Personnel</item>
+        <item>Other</item>
+    </string-array>
+</resources>

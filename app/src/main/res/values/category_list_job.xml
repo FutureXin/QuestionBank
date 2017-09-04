@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string-array name="category_list_j">
+        <item>Android工程师</item>
+        <item>iOS工程师</item>
+        <item>JavaEE工程师</item>
+        <item>功能测试工程师</item>
+        <item>自动化测试工程师</item>
+        <item>性能测试工程师</item>
+        <item>运维工程师</item>
+        <item>数据挖掘工程师</item>
+    </string-array>
+</resources>

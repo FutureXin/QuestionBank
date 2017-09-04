@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="BMBreak_Network">Not connected</string>
+	<string name="BMUpdateTitle">Discover new version</string>
+	<string name="BMNewVersion">Latest version: </string>
+	<string name="BMUpdateContent">Update content</string>
+	<string name="BMUpdateSize">Download only:</string>
+	<string name="BMTargetSize">New version size:</string>
+	<string name="BMGprsCondition">(tip: non WIFI environment)</string>
+	<string name="BMUpdateNow">Update immediately</string>
+	<string name="BMAppUpdate">Application update</string>
+	<string name="BMNotNow">Talk later</string>
+	<string name="BMIgnore">Ignore this version</string>
+	<string name="BMToast_IsUpdating">Updating...</string>
+	<string name="BMDialog_InstallAPK">The latest version has been downloaded and installed?</string>
+	<string name="BMUpdateCheck">v3.1.4Beta</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string-array name="category_list_j">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>JavaEE</item>
+        <item>Functional Test</item>
+        <item>Automation Test</item>
+        <item>Performance Test</item>
+        <item>Operations</item>
+        <item>Data Mining</item>
+    </string-array>
+</resources>

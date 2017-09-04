@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#00bbba</color>
+    <color name="colorAccent">#2e1820</color>
+    <color name="splash">#00cccc</color>
+    <color name="text_colors">#000000</color>
+    <color name="Transparent_color">#00000000</color>
+    <!--<drawable name="title_un_enbled">#FFFFCC</drawable>-->
+    <!--<drawable name="title_enbled">#00000000</drawable>-->
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="blue">#00cccc</color>
+    <color name="menu">#00bbbb</color>
+    <color name="line">#ffd3dde6</color>
+    <color name="grid_items_bg">#ffe8ecef</color>
+    <color name="common_text_color">#ff333333</color>
+    <color name="shape_color">#00ff00ff</color>
+    <color name="activity_color">#f4f3ef</color>
+    <color name="user_center_se_color">#F0EBE6</color>
+    <color name="common_red">#f00</color>
+</resources>

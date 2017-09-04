@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="bmob_common_action_info_exist">Downloading.</string>
+	<string name="bmob_common_info_interrupt">Download error, please check the network to continue.</string>
+	<string name="bmob_common_action_pause">suspend</string>
+	<string name="bmob_common_action_continue">Continue</string>
+	<string name="bmob_common_action_cancel">Cancel</string>
+	<string name="bmob_common_download_notification_prefix">Downloading: </string>
+	<string name="bmob_common_pause_notification_prefix">Suspend: </string>
+	<string name="bmob_common_start_download_notification">Downloading application</string>
+	<string name="bmob_common_start_patch_notification">Updating installation package</string>
+    <string name="bmob_common_network_break_alert">Please connect to the network and try again！</string>
+	<string name="bmob_common_download_failed">Download failed</string>
+	<string name="bmob_common_download_finish">Download completed, click Install</string>
+	<string name="bmob_common_patch_finish">Update completed, click Install</string>
+	<string name="bmob_common_silent_download_finish">The new version is ready, please click Install</string>
+</resources>

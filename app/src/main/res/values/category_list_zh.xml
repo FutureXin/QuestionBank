@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_list_zh">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>Java</item>
+        <item>JavaEE</item>
+        <item>C</item>
+        <item>C++</item>
+        <item>Objective-C</item>
+        <item>C#</item>
+        <item>.NET</item>
+        <item>Python</item>
+        <item>PHP</item>
+        <item>JavaScript</item>
+        <item>HTML5/CSS3</item>
+        <item>Servlet/JSP</item>
+        <item>Hadoop</item>
+        <item>Node.js</item>
+        <item>Golang</item>
+        <item>Ruby</item>
+        <item>Delphi</item>
+        <item>Erlang</item>
+        <item>VB</item>
+        <item>Perl</item>
+        <item>Swift</item>
+        <item>Linux</item>
+        <item>数据库</item>
+        <item>测试理论</item>
+        <item>自动化测试</item>
+        <item>性能测试</item>
+        <item>运维</item>
+        <item>人事</item>
+        <item>其它</item>
+    </string-array>
+</resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_width="match_parent"
+    android:background="@drawable/shape2"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_show_topic"
+        android:maxLines="2"
+        android:minLines="2"
+        android:ellipsize="end"
+        android:textSize="20sp"
+        android:gravity="top"
+        android:text="@string/app_name"
+        android:background="@color/Transparent_color"
+        android:textColor="@color/text_colors"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_below="@+id/item_show_topic"
+        android:weightSum="1"
+        tools:ignore="RtlHardcoded">
+
+        <TextView
+            android:id="@+id/item_show_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:text="@string/app_name"
+            android:textColor="@color/text_colors"
+            android:textSize="16sp"
+            android:layout_weight="0.99" />
+
+        <ImageView
+            android:id="@+id/item_show_praise_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/app_name"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            app:srcCompat="@mipmap/main_praise" />
+
+        <TextView
+            android:id="@+id/item_show_praise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/text_colors"
+            android:textSize="14sp" />
+    </LinearLayout>
+</RelativeLayout>

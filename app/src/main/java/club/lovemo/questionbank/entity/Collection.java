@@ -3,7 +3,8 @@ package club.lovemo.questionbank.entity;
 import cn.bmob.v3.BmobObject;
 
 /**
- * Created by John.
+ * Created by John
+ * 收藏类
  */
 
 public class Collection extends BmobObject {

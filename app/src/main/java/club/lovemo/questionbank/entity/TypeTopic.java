@@ -6,17 +6,17 @@ import cn.bmob.v3.BmobObject;
  * Created by John on 2016/12/13.
  */
 
-public class Type_Topic extends BmobObject {
+public class TypeTopic extends BmobObject {
     private String objectId;
     private String type;
     private String topic;
     private Integer praise;
     private boolean isDel;
 
-    public Type_Topic() {
+    public TypeTopic() {
     }
 
-    public Type_Topic(String objectId, String type, String topic,Integer praise,boolean isDel) {
+    public TypeTopic(String objectId, String type, String topic,Integer praise,boolean isDel) {
         this.objectId = objectId;
         this.type = type;
         this.topic = topic;

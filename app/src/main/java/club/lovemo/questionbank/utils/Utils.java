@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 
 public class Utils {
@@ -47,7 +48,7 @@ public class Utils {
 	 * dip 转换成 px
 	 * @param dip
 	 * @param context
-	 * @return
+	 * @return float
 	 */
 	public static float dip2Dimension(float dip, Context context) {
 		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
@@ -57,7 +58,7 @@ public class Utils {
 	 * @param dip
 	 * @param context
 	 * @param complexUnit {@link TypedValue#COMPLEX_UNIT_DIP} {@link TypedValue#COMPLEX_UNIT_SP}}
-	 * @return
+	 * @return float
 	 */
 	public static float toDimension(float dip, Context context, int complexUnit) {
 		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
@@ -66,7 +67,7 @@ public class Utils {
 
 	/** 获取状态栏高度
 	 * @param v
-	 * @return
+	 * @return int height
 	 */
 	public static int getStatusBarHeight(View v) {
 		if (v == null) {
@@ -133,7 +134,7 @@ public class Utils {
 
 	public static String encode(String string) throws Exception {
 		byte[] hash = MessageDigest.getInstance("MD5").digest(
-				string.getBytes("UTF-8"));
+				string.getBytes(Charset.forName("UTF-8")));
 		StringBuilder hex = new StringBuilder(hash.length * 2);
 		for (byte b : hash) {
 			if ((b & 0xFF) < 0x10) {
@@ -147,9 +148,9 @@ public class Utils {
 		if(context==null){
 			return;
 		}
-		final View v = ((Activity) context).getWindow().peekDecorView();
+		final View v = context.getWindow().peekDecorView();
 		if (v != null && v.getWindowToken() != null) {
-			InputMethodManager imm = (InputMethodManager) context.getSystemService(context.INPUT_METHOD_SERVICE);
+			InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 		}
 	}
@@ -226,7 +227,7 @@ public class Utils {
 	 * @param bitmap
 	 *            传入Bitmap对象
 	 * @param tempUri
-	 * @return
+	 * @return bitmap
 	 */
 	public static Bitmap toRoundBitmap(Bitmap bitmap, Uri tempUri) {
 		int width = bitmap.getWidth();

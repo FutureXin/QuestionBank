@@ -72,10 +72,10 @@ public class RefreshListView extends ListView implements OnScrollListener,
 		mHeaderView = View.inflate(getContext(), R.layout.refresh_header, null);
 		this.addHeaderView(mHeaderView);
 
-		tvTitle = (TextView) mHeaderView.findViewById(R.id.tv_title);
-		tvTime = (TextView) mHeaderView.findViewById(R.id.tv_time);
-		ivArrow = (ImageView) mHeaderView.findViewById(R.id.iv_arr);
-		pbProgress = (ProgressBar) mHeaderView.findViewById(R.id.pb_progress);
+		tvTitle = mHeaderView.findViewById(R.id.tv_title);
+		tvTime = mHeaderView.findViewById(R.id.tv_time);
+		ivArrow = mHeaderView.findViewById(R.id.iv_arr);
+		pbProgress = mHeaderView.findViewById(R.id.pb_progress);
 
 		mHeaderView.measure(0, 0);
 		mHeaderViewHeight = mHeaderView.getMeasuredHeight();

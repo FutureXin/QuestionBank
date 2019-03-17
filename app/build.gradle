@@ -1,53 +1,80 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
-
+    compileSdkVersion 27
+    //buildToolsVersion '28.0.3'
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "club.lovemo.questionbank"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            zipAlignEnabled true
         }
+        debug {
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable false
+            minifyEnabled false
+            zipAlignEnabled true
+        }
+
     }
 
+//    android.applicationVariants.all { variant ->
+//        variant.outputs.all {
+//            outputFileName = "${defaultConfig.applicationId-variant.name}-${variant.versionName}.apk"
+//        }
+//    }
     android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.outputFile = new File(output.outputFile.parent, defaultConfig.applicationId + "-" + buildType.name + "-v" +
-                    defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk");
+        variant.outputs.all {
+            if (variant.buildType.name != 'debug') {//防止AS无法安装debug包(apk)
+                //定制apk输出文件名
+                outputFileName = "app_${variant.flavorName}_V${defaultConfig.versionName}_${variant.buildType.name}.apk"
+            }
+            //这个修改输出APK的文件名
+            outputFileName = "${defaultConfig.applicationId}-${variant.name}-${variant.versionName}-${variant.buildType.name}.apk"
         }
     }
 }
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //以下SDK开发者请根据需要自行选择
     //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
     //3.5.0：请务必查看下面注释[1]
-    compile 'cn.bmob.android:bmob-sdk:3.5.5'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    testCompile 'junit:junit:4.12'
+    implementation 'cn.bmob.android:bmob-sdk:3.5.5'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'junit:junit:4.12'
     //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
-    compile 'cn.bmob.android:http-legacy:1.0'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:gridlayout-v7:25.3.1'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation 'cn.bmob.android:http-legacy:1.0'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:gridlayout-v7:27.1.1'
+    //compile "$kotlin_version"
 }
 repositories {
     mavenCentral()
+}
+android {
+
+    lintOptions{
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }

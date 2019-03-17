@@ -34,12 +34,12 @@ public class FeedbackActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
 
-        feedback_submit=(Button)findViewById(R.id.feedback_submit_btn);
-        et_feedback=(EditText) findViewById(R.id.et_feedback);
-        feedback_pb=(ProgressBar)findViewById(R.id.feedback_pb_progress);
+        feedback_submit= findViewById(R.id.feedback_submit_btn);
+        et_feedback= findViewById(R.id.et_feedback);
+        feedback_pb= findViewById(R.id.feedback_pb_progress);
         feedback_pb.bringToFront();
         myUser= BmobUser.getCurrentUser(MyUser.class);
-        Toolbar feedback_toolbar=(Toolbar)findViewById(R.id.feedback_toolbar);
+        Toolbar feedback_toolbar= findViewById(R.id.feedback_toolbar);
         feedback_toolbar.setNavigationIcon(R.mipmap.back);
         feedback_toolbar.setTitle(R.string.text_feedback);
         setSupportActionBar(feedback_toolbar);

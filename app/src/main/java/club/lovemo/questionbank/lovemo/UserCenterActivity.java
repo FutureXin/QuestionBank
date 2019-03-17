@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -12,13 +11,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 
 import java.io.File;
 
@@ -43,11 +38,11 @@ public class UserCenterActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_center);
-        imageView=(ImageView) findViewById(R.id.user_center_image_view);
-        RelativeLayout relativeLayout_feedback=(RelativeLayout)findViewById(R.id.user_center_relative_feedback);
-        RelativeLayout relativeLayout_about=(RelativeLayout)findViewById(R.id.user_center_relative_about);
+        imageView= findViewById(R.id.user_center_image_view);
+        RelativeLayout relativeLayout_feedback= findViewById(R.id.user_center_relative_feedback);
+        RelativeLayout relativeLayout_about= findViewById(R.id.user_center_relative_about);
         myUser= BmobUser.getCurrentUser(MyUser.class);
-        Toolbar user_center_toolbar=(Toolbar)findViewById(R.id.user_center_toolbar);
+        Toolbar user_center_toolbar= findViewById(R.id.user_center_toolbar);
         user_center_toolbar.setNavigationIcon(R.mipmap.back);
         setSupportActionBar(user_center_toolbar);
         if(getSupportActionBar()!=null){
@@ -63,7 +58,7 @@ public class UserCenterActivity extends AppCompatActivity{
                 UserCenterActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
             }
         });
-        TextView username=(TextView)findViewById(R.id.user_center_username);
+        TextView username= findViewById(R.id.user_center_username);
         username.setText(myUser.getUsername());
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +85,7 @@ public class UserCenterActivity extends AppCompatActivity{
     protected void showChoosePicDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("设置头像");
-        String[] items = { "选择本地照片", "拍照" };
+        String[] items = { "选择本地图片", "拍照" };
         builder.setNegativeButton("取消", null);
         builder.setItems(items, new DialogInterface.OnClickListener() {
 

@@ -1,6 +1,7 @@
 package club.lovemo.questionbank.lovemo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -55,11 +56,12 @@ public class SplashActivity extends AppCompatActivity {
     private PermissionManager helper;
     private AlertDialog email_dialog;
     private String Email;
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg){
             switch (msg.what) {
                 case LOGIN_SUCCESS:
-                    startActivity(new Intent(SplashActivity.this, QuestionListActivity.class));
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     SplashActivity.this.finish();
                     break;
                 case LOGIN:
@@ -140,10 +142,10 @@ public class SplashActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiOptions);
         }
-        TextView tv_show_app_name=(TextView)findViewById(R.id.tv_show_app_name);
+        TextView tv_show_app_name=findViewById(R.id.tv_show_app_name);
         tv_show_app_name.setVisibility(View.VISIBLE);
 //        BmobUpdateAgent.initAppVersion();//初始化AppVersion表
-        container=(CoordinatorLayout)findViewById(R.id.container);
+        container=findViewById(R.id.container);
         Utils.print(AppConstants.LogTag,isMarshmallow()+"版本是否大于6.0");
         if(isMarshmallow()){
             Permission_to_request();

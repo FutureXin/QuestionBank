@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,12 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import club.lovemo.questionbank.R;
@@ -49,27 +47,32 @@ public class LoginActivity extends AppCompatActivity{
     private static final int RESET_ERROR=6;
     private static final int RESET_THREAD_ERROR=7;
     private static final int USER_OR_PASS_ERROR =8 ;
-    private EditText username;
+    private static EditText username;
     private EditText password;
-    private ProgressDialog login_dialog;
-    private ProgressDialog send_email_dialog;
-    private AlertDialog reset_password_dialog;
-    private String email=null;
-    private Handler mHandler=new Handler(){
+    private static ProgressDialog login_dialog;
+    private static ProgressDialog send_email_dialog;
+    private static AlertDialog reset_password_dialog;
+    private static String email=null;
+    private static class MyHandler extends Handler{
+        private final WeakReference<LoginActivity> mActivity;
+        private MyHandler(LoginActivity activity) {
+            this.mActivity =new WeakReference<>(activity);
+        }
         public void handleMessage(Message msg){
+            final LoginActivity activity=mActivity.get();
             switch (msg.what) {
                 case LOGIN_ERROR:
                     login_dialog.cancel();
-                    Utils.showToast(LoginActivity.this,"登录失败！！！");
+                    Utils.showToast(activity,"登录失败！！！");
                     break;
                 case LOGIN:
                     login_dialog.cancel();
                     final MyUser user = BmobUser.getCurrentUser(MyUser.class);
                     if(user.getEmailVerified()){
-                        startActivity(new Intent(LoginActivity.this, QuestionListActivity.class));
-                        LoginActivity.this.finish();
+                        activity.startActivity(new Intent(activity, MainActivity.class));
+                        activity.finish();
                     }else {
-                        new AlertDialog.Builder(LoginActivity.this)
+                        new AlertDialog.Builder(activity)
                                 .setTitle(R.string.text_account_not_activated)
                                 .setMessage("账号："+user.getUsername()+"邮箱未激活，请到" +user.getEmail()  + "邮箱进行激活操作。\n"+"未收到邮件或邮件已过期？\n点击发送按钮重新发送激活邮件！")
                                 .setNegativeButton(R.string.text_send, new DialogInterface.OnClickListener() {
@@ -79,13 +82,13 @@ public class LoginActivity extends AppCompatActivity{
                                             @Override
                                             public void done(BmobException e) {
                                                 if(e==null){
-                                                    Utils.showToast(LoginActivity.this,"请求验证邮件成功，请到" + user.getEmail() + "邮箱中进行激活。");
+                                                    Utils.showToast(activity,"请求验证邮件成功，请到" + user.getEmail() + "邮箱中进行激活。");
                                                     Utils.print(AppConstants.LogTag,"请求验证邮件成功，请到" + user.getEmail() + "邮箱中进行激活。");
                                                 }else{
                                                     if(e.getMessage().contains(AppConstants.NO_NETWORK_ERROR_INFO)){
-                                                        Utils.showToast(LoginActivity.this,getResources().getString(R.string.text_no_network));
+                                                        Utils.showToast(activity,activity.getResources().getString(R.string.text_no_network));
                                                     }else {
-                                                        Utils.showToast(LoginActivity.this,getResources().getString(R.string.text_splash_send_email_error));
+                                                        Utils.showToast(activity,activity.getResources().getString(R.string.text_splash_send_email_error));
                                                         Utils.print(AppConstants.LogTag,"请求验证邮箱失败，报错信息："+e.getMessage());
                                                     }
                                                 }
@@ -108,44 +111,52 @@ public class LoginActivity extends AppCompatActivity{
                     if(login_dialog!=null){
                         login_dialog.cancel();
                     }
-                    Utils.showToast(LoginActivity.this,getResources().getString(R.string.text_no_network));
+                    Utils.showToast(activity,activity.getResources().getString(R.string.text_no_network));
                     break;
                 case QUERY_USER_ERROR:
                     send_email_dialog.cancel();
-                    Utils.showToast(LoginActivity.this,"查询用户绑定邮箱失败。");
+                    Utils.showToast(activity,"查询用户绑定邮箱失败。");
                     break;
                 case RESET_SUCCESS:
                     send_email_dialog.cancel();
-                    Show_Email_Dialog(username.getText().toString().trim(),email);
+                    new AlertDialog.Builder(activity)
+                    .setTitle(R.string.text_password_reset)
+                    .setMessage("账号："+username+"重置密码请求发送成功，请到" +email  + "邮箱进行密码重置操作。")
+                    .setNegativeButton(R.string.text_ok, null)
+                    .setCancelable(false)
+                    .show();
+//                    Show_Email_Dialog(username.getText().toString().trim(),email);
                     break;
                 case RESET_ERROR:
                     send_email_dialog.cancel();
-                    Utils.showToast(LoginActivity.this,"发送重置密码邮件失败！！！");
+                    Utils.showToast(activity,"发送重置密码邮件失败！！！");
                     break;
                 case RESET_THREAD_ERROR:
                     send_email_dialog.cancel();
-                    Utils.showToast(LoginActivity.this,"发送重置密码请求线程报错！！！");
+                    Utils.showToast(activity,"发送重置密码请求线程报错！！！");
                     break;
                 case USER_OR_PASS_ERROR:
                     login_dialog.cancel();
-                    Utils.showToast(LoginActivity.this,"用户名或密码错误！");
+                    Utils.showToast(activity,"用户名或密码错误！");
                     break;
                 default:
                     break;
             }
-
         }
-    };
+    }
+
+
+    private final MyHandler mHandler = new MyHandler(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button login_btn=(Button)findViewById(R.id.login_login);
-        Button reg_btn=(Button)findViewById(R.id.login_reg);
-        TextView back_pass=(TextView)findViewById(R.id.login_password_back);
-        username=(EditText) findViewById(R.id.et_login_username);
-        password=(EditText) findViewById(R.id.et_login_user_password);
+        Button login_btn= findViewById(R.id.login_login);
+        Button reg_btn= findViewById(R.id.login_reg);
+        TextView back_pass= findViewById(R.id.login_password_back);
+        username= findViewById(R.id.et_login_username);
+        password= findViewById(R.id.et_login_user_password);
         //设置hint字体
         password.setTypeface(Typeface.DEFAULT);
         password.setTransformationMethod(new PasswordTransformationMethod());
@@ -154,7 +165,7 @@ public class LoginActivity extends AppCompatActivity{
         if(preferencesUtils.getUserName()!=null) {
             username.setSelection(username.getText().length());
         }
-        Toolbar login_toolbar=(Toolbar)findViewById(R.id.login_toolbar);
+        Toolbar login_toolbar= findViewById(R.id.login_toolbar);
         setSupportActionBar(login_toolbar);
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -343,12 +354,12 @@ public class LoginActivity extends AppCompatActivity{
             }
         }.start();
     }
-    private void Show_Email_Dialog(String username,String email){
-        new AlertDialog.Builder(LoginActivity.this)
-                .setTitle(R.string.text_password_reset)
-                .setMessage("账号："+username+"重置密码请求发送成功，请到" +email  + "邮箱进行密码重置操作。")
-                .setNegativeButton(R.string.text_ok, null)
-                .setCancelable(false)
-                .show();
-    }
+//    private static void Show_Email_Dialog(String username,String email){
+//        new AlertDialog.Builder()
+//                .setTitle(R.string.text_password_reset)
+//                .setMessage("账号："+username+"重置密码请求发送成功，请到" +email  + "邮箱进行密码重置操作。")
+//                .setNegativeButton(R.string.text_ok, null)
+//                .setCancelable(false)
+//                .show();
+//    }
 }

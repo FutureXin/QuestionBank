@@ -49,10 +49,10 @@ public class GuideActivity extends Activity {
 
 //		requestWindowFeature(Window.FEATURE_NO_TITLE);// 去掉标题
 		setContentView(R.layout.activity_guide);
-		vpGuide = (ViewPager) findViewById(R.id.vp_guide);
-		llPointGroup = (LinearLayout) findViewById(R.id.ll_point_group);
+		vpGuide = findViewById(R.id.vp_guide);
+		llPointGroup = findViewById(R.id.ll_point_group);
 		viewRedPoint = findViewById(R.id.view_red_point);
-		btnStart = (Button) findViewById(R.id.btn_start);
+		btnStart = findViewById(R.id.btn_start);
 
 		btnStart.setOnClickListener(new OnClickListener() {
 

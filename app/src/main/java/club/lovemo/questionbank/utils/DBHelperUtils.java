@@ -181,7 +181,7 @@ public class DBHelperUtils {
 		}
 		return question_array;
 	}
-    public List<QuestionBankDB> getQuestionList(String [] KEY_ARRAY) throws Exception{
+    public List<QuestionBankDB> getQuestionList(String [] KEY_ARRAY) {
 		List<String> str=new ArrayList<>();
 //		for (int i = 0; i < KEY_ARRAY.length; i++) {
 //			str.add("'"+KEY_ARRAY[i]+"'");

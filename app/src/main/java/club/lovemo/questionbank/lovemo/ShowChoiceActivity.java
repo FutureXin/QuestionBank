@@ -2,7 +2,6 @@ package club.lovemo.questionbank.lovemo;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,11 +9,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.List;
 import club.lovemo.questionbank.R;
@@ -38,7 +34,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * Created by John.
  */
 
-public class Show_ChoiceActivity extends AppCompatActivity {
+public class ShowChoiceActivity extends AppCompatActivity {
     private TextView show_choice_topic;
     private TextView show_choice_answer;
     private TextView show_choice_a;
@@ -66,24 +62,24 @@ public class Show_ChoiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_choice);
 
-        choice_toolbar=(Toolbar) findViewById(R.id.choice_toolbar);
-        show_choice_topic = (TextView) findViewById(R.id.show_choice_topic);
-        show_choice_answer = (TextView) findViewById(R.id.show_choice_answer);
-        show_choice_a = (TextView) findViewById(R.id.show_choice_a);
-        show_choice_b = (TextView) findViewById(R.id.show_choice_b);
-        show_choice_c = (TextView) findViewById(R.id.show_choice_c);
-        show_choice_d = (TextView) findViewById(R.id.show_choice_d);
-        show_choice_e = (TextView) findViewById(R.id.show_choice_e);
-        show_choice_f = (TextView) findViewById(R.id.show_choice_f);
-        show_choice_g = (TextView) findViewById(R.id.show_choice_g);
-        show_choice_h = (TextView) findViewById(R.id.show_choice_h);
-        show_choice_i = (TextView) findViewById(R.id.show_choice_i);
-        show_choice_detailed = (TextView) findViewById(R.id.show_choice_detailed);
-        choice_detailed = (TextView) findViewById(R.id.choice_detailed);
-        show_choice_praise_btn=(ImageButton)findViewById(R.id.show_choice_praise);
-        show_choice_praise_count=(TextView)findViewById(R.id.show_choice_praise_count);
-        show_choice_url=(TextView)findViewById(R.id.show_choice_url_text);
-        show_choice_answer_btn = (Button) findViewById(R.id.show_choice_btn);
+        choice_toolbar= findViewById(R.id.choice_toolbar);
+        show_choice_topic = findViewById(R.id.show_choice_topic);
+        show_choice_answer = findViewById(R.id.show_choice_answer);
+        show_choice_a = findViewById(R.id.show_choice_a);
+        show_choice_b = findViewById(R.id.show_choice_b);
+        show_choice_c = findViewById(R.id.show_choice_c);
+        show_choice_d = findViewById(R.id.show_choice_d);
+        show_choice_e = findViewById(R.id.show_choice_e);
+        show_choice_f = findViewById(R.id.show_choice_f);
+        show_choice_g = findViewById(R.id.show_choice_g);
+        show_choice_h = findViewById(R.id.show_choice_h);
+        show_choice_i = findViewById(R.id.show_choice_i);
+        show_choice_detailed = findViewById(R.id.show_choice_detailed);
+        choice_detailed = findViewById(R.id.choice_detailed);
+        show_choice_praise_btn= findViewById(R.id.show_choice_praise);
+        show_choice_praise_count= findViewById(R.id.show_choice_praise_count);
+        show_choice_url= findViewById(R.id.show_choice_url_text);
+        show_choice_answer_btn = findViewById(R.id.show_choice_btn);
         myUser= BmobUser.getCurrentUser(MyUser.class);
         ID = getIntent().getStringExtra("id");
         Utils.print(AppConstants.LogTag,ID+"choiceID");
@@ -109,7 +105,7 @@ public class Show_ChoiceActivity extends AppCompatActivity {
                             public void done(List<Praise> list, BmobException e) {
                                 if(e==null){
                                     if(list!=null&&list.size()>0){
-                                        Utils.showToast(Show_ChoiceActivity.this,getResources().getString(R.string.text_been_great));
+                                        Utils.showToast(ShowChoiceActivity.this,getResources().getString(R.string.text_been_great));
                                         show_choice_praise_btn.setBackgroundResource(R.mipmap.been_praised);
                                     }else {
                                         addPraise(myUser.getObjectId(),ID);
@@ -118,9 +114,9 @@ public class Show_ChoiceActivity extends AppCompatActivity {
                                     if(e.getErrorCode()==101){
                                         addPraise(myUser.getObjectId(),ID);
                                     }else if(e.getErrorCode()==9016){
-                                        Utils.showToast(Show_ChoiceActivity.this,getResources().getString(R.string.text_no_network));
+                                        Utils.showToast(ShowChoiceActivity.this,getResources().getString(R.string.text_no_network));
                                     }else {
-                                        Utils.showToast(Show_ChoiceActivity.this,"error:"+e.getMessage()+e.getErrorCode());
+                                        Utils.showToast(ShowChoiceActivity.this,"error:"+e.getMessage()+e.getErrorCode());
                                     }
                                 }
 
@@ -159,8 +155,8 @@ public class Show_ChoiceActivity extends AppCompatActivity {
         choice_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Show_ChoiceActivity.this.finish();
-                Show_ChoiceActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                ShowChoiceActivity.this.finish();
+                ShowChoiceActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
             }
         });
         //设置toolBar上的MenuItem点击事件
@@ -170,10 +166,10 @@ public class Show_ChoiceActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_feedback://点击了反馈按钮
                         Intent feedback_intent=new Intent();
-                        feedback_intent.setClass(Show_ChoiceActivity.this,FeedbackActivity.class);
+                        feedback_intent.setClass(ShowChoiceActivity.this,FeedbackActivity.class);
                         feedback_intent.putExtra("id",ID);
-                        Show_ChoiceActivity.this.startActivity(feedback_intent);
-                        Show_ChoiceActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                        ShowChoiceActivity.this.startActivity(feedback_intent);
+                        ShowChoiceActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
                         break;
                     case R.id.action_collect://点击了收藏按钮
                         BmobQuery<Collection> collectionQuery = new BmobQuery<>();
@@ -191,7 +187,7 @@ public class Show_ChoiceActivity extends AppCompatActivity {
                                             if(e.getErrorCode()==101){
                                                 addCollection(myUser.getObjectId(),questionBankDB.getQUESTION_TYPE(),questionBankDB.getTOPIC(),questionBankDB.getCHARACTERISTIC());
                                             }else if(e.getErrorCode()==9016){
-                                                Utils.showToast(Show_ChoiceActivity.this,getResources().getString(R.string.text_no_network));
+                                                Utils.showToast(ShowChoiceActivity.this,getResources().getString(R.string.text_no_network));
                                             }else {
                                                 Utils.print(AppConstants.LogTag,"error:"+e.getMessage()+e.getErrorCode());
                                             }
@@ -220,7 +216,7 @@ public class Show_ChoiceActivity extends AppCompatActivity {
                         }else{
                             choice_toolbar.getMenu().findItem(R.id.action_collect).setVisible(false);
                            if(e.getErrorCode()==9016){
-                                Utils.showToast(Show_ChoiceActivity.this,getResources().getString(R.string.text_no_network));
+                                Utils.showToast(ShowChoiceActivity.this,getResources().getString(R.string.text_no_network));
                             }else {
                                 Utils.print(AppConstants.LogTag,"error:"+e.getMessage()+e.getErrorCode());
                             }
@@ -255,12 +251,12 @@ public class Show_ChoiceActivity extends AppCompatActivity {
             @Override
             public void done(String objectId, BmobException e) {
                 if(e==null){
-                    Utils.showToast(Show_ChoiceActivity.this , getResources().getString(R.string.text_collection_success));
+                    Utils.showToast(ShowChoiceActivity.this , getResources().getString(R.string.text_collection_success));
                     choice_toolbar.getMenu().findItem(R.id.action_collect).setIcon(R.mipmap.already_collected);//改变图标样式
                 }else {
-                    Utils.showToast(Show_ChoiceActivity.this, getResources().getString(R.string.text_collection_failure));
+                    Utils.showToast(ShowChoiceActivity.this, getResources().getString(R.string.text_collection_failure));
                     if(e.getErrorCode()==9016){
-                        Utils.showToast(Show_ChoiceActivity.this,getResources().getString(R.string.text_no_network));
+                        Utils.showToast(ShowChoiceActivity.this,getResources().getString(R.string.text_no_network));
                     }else {
                         Utils.print(AppConstants.LogTag, "收藏失败" + e.getMessage() + e.getErrorCode());
                     }
@@ -276,7 +272,7 @@ public class Show_ChoiceActivity extends AppCompatActivity {
             @Override
             public void done(BmobException e) {
                 if(e==null){
-                   Utils.showToast(Show_ChoiceActivity.this,getResources().getString(R.string.text_cancel_collection_success));
+                   Utils.showToast(ShowChoiceActivity.this,getResources().getString(R.string.text_cancel_collection_success));
                     choice_toolbar.getMenu().findItem(R.id.action_collect).setIcon(R.mipmap.not_collect);//改变图标样式
                 }else{
                     Utils.print(AppConstants.LogTag,"失败："+e.getMessage()+","+e.getErrorCode());
@@ -292,7 +288,7 @@ public class Show_ChoiceActivity extends AppCompatActivity {
             @Override
             public void done(String objectId, BmobException e) {
                 if(e==null){
-                    Utils.showToast(Show_ChoiceActivity.this,getResources().getString(R.string.text_thumb_success));
+                    Utils.showToast(ShowChoiceActivity.this,getResources().getString(R.string.text_thumb_success));
                     String praiseCount=questionBankDB.getPRAISE()+1+"";
                     show_choice_praise_count.setText(praiseCount);
                     QuestionBank questionBank=new QuestionBank();
@@ -315,7 +311,7 @@ public class Show_ChoiceActivity extends AppCompatActivity {
                     show_choice_praise_btn.setBackgroundResource(R.mipmap.been_praised);
                 }else{
                     if(e.getErrorCode()==9016){
-                        Utils.showToast(Show_ChoiceActivity.this,getResources().getString(R.string.text_no_network));
+                        Utils.showToast(ShowChoiceActivity.this,getResources().getString(R.string.text_no_network));
                     }else {
                         Utils.print(AppConstants.LogTag, "error:" + e.getMessage() + "," + e.getErrorCode());
                     }
@@ -392,7 +388,7 @@ public class Show_ChoiceActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) { //监控/拦截/屏蔽返回键
             finish();
-            Show_ChoiceActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+            ShowChoiceActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
             return true;
         }
         return super.onKeyDown(keyCode, event);

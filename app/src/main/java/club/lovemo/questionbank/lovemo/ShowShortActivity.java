@@ -2,7 +2,6 @@ package club.lovemo.questionbank.lovemo;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,11 +9,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -40,7 +36,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * Created by John.
  */
 
-public class Show_ShortActivity extends AppCompatActivity {
+public class ShowShortActivity extends AppCompatActivity {
     private TextView show_short_topic;
     private TextView show_short_answer;
     private TextView show_short_detailed;
@@ -58,14 +54,14 @@ public class Show_ShortActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_short);
 
-        show_short_topic = (TextView) findViewById(R.id.show_short_topic);
-        show_short_answer = (TextView) findViewById(R.id.show_short_answer);
-        show_short_detailed = (TextView) findViewById(R.id.show_short_detailed);
-        short_detailed = (TextView) findViewById(R.id.short_detailed);
-        show_short_answer_btn = (Button) findViewById(R.id.show_short_btn);
-        show_short_praise_btn=(ImageButton)findViewById(R.id.show_short_praise);
-        show_short_praise_count=(TextView)findViewById(R.id.show_short_praise_count);
-        show_short_url=(TextView)findViewById(R.id.show_short_url_text);
+        show_short_topic = findViewById(R.id.show_short_topic);
+        show_short_answer = findViewById(R.id.show_short_answer);
+        show_short_detailed = findViewById(R.id.show_short_detailed);
+        short_detailed = findViewById(R.id.short_detailed);
+        show_short_answer_btn = findViewById(R.id.show_short_btn);
+        show_short_praise_btn= findViewById(R.id.show_short_praise);
+        show_short_praise_count= findViewById(R.id.show_short_praise_count);
+        show_short_url= findViewById(R.id.show_short_url_text);
         myUser= BmobUser.getCurrentUser(MyUser.class);
         ID = getIntent().getStringExtra("id");
         Utils.print(AppConstants.LogTag, ID + "题目");
@@ -91,7 +87,7 @@ public class Show_ShortActivity extends AppCompatActivity {
                             public void done(List<Praise> list, BmobException e) {
                                 if(e==null){
                                     if(list!=null&&list.size()>0){
-                                        Utils.showToast(Show_ShortActivity.this,getResources().getString(R.string.text_been_great));
+                                        Utils.showToast(ShowShortActivity.this,getResources().getString(R.string.text_been_great));
                                         show_short_praise_btn.setBackgroundResource(R.mipmap.been_praised);
                                     }else {
                                         addPraise(myUser.getObjectId(),ID);
@@ -100,9 +96,9 @@ public class Show_ShortActivity extends AppCompatActivity {
                                     if(e.getErrorCode()==101){
                                         addPraise(myUser.getObjectId(),ID);
                                     }else if(e.getErrorCode()==9016){
-                                        Utils.showToast(Show_ShortActivity.this,getResources().getString(R.string.text_no_network));
+                                        Utils.showToast(ShowShortActivity.this,getResources().getString(R.string.text_no_network));
                                     }else {
-                                        Utils.showToast(Show_ShortActivity.this,"error:"+e.getMessage()+e.getErrorCode());
+                                        Utils.showToast(ShowShortActivity.this,"error:"+e.getMessage()+e.getErrorCode());
                                     }
                                 }
                             }
@@ -128,7 +124,7 @@ public class Show_ShortActivity extends AppCompatActivity {
 
             }
         });
-        short_toolbar = (Toolbar) findViewById(R.id.short_toolbar);
+        short_toolbar = findViewById(R.id.short_toolbar);
         short_toolbar.setNavigationIcon(R.mipmap.back);
         setSupportActionBar(short_toolbar);
         if(getSupportActionBar()!=null){
@@ -141,7 +137,7 @@ public class Show_ShortActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                Show_ShortActivity.this.overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                ShowShortActivity.this.overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
         });
         //设置toolBar上的MenuItem点击事件
@@ -151,10 +147,10 @@ public class Show_ShortActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_feedback://点击了反馈按钮
                         Intent feedback_intent=new Intent();
-                        feedback_intent.setClass(Show_ShortActivity.this,FeedbackActivity.class);
+                        feedback_intent.setClass(ShowShortActivity.this,FeedbackActivity.class);
                         feedback_intent.putExtra("id",ID);
-                        Show_ShortActivity.this.startActivity(feedback_intent);
-                        Show_ShortActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                        ShowShortActivity.this.startActivity(feedback_intent);
+                        ShowShortActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
                         break;
                     case R.id.action_collect://点击了收藏按钮
                         BmobQuery<Collection> collectionQuery = new BmobQuery<>();
@@ -172,7 +168,7 @@ public class Show_ShortActivity extends AppCompatActivity {
                                             if(e.getErrorCode()==101){
                                                 addCollection(myUser.getObjectId(),questionBankDB.getQUESTION_TYPE(),questionBankDB.getTOPIC(),questionBankDB.getCHARACTERISTIC());
                                             }else if(e.getErrorCode()==9016){
-                                                Utils.showToast(Show_ShortActivity.this,getResources().getString(R.string.text_no_network));
+                                                Utils.showToast(ShowShortActivity.this,getResources().getString(R.string.text_no_network));
                                             }else {
                                                 Utils.print(AppConstants.LogTag,"error:"+e.getMessage()+e.getErrorCode());
                                             }
@@ -200,7 +196,7 @@ public class Show_ShortActivity extends AppCompatActivity {
                         }else{
                             short_toolbar.getMenu().findItem(R.id.action_collect).setVisible(false);
                             if(e.getErrorCode()==9016){
-                                Utils.showToast(Show_ShortActivity.this,getResources().getString(R.string.text_no_network));
+                                Utils.showToast(ShowShortActivity.this,getResources().getString(R.string.text_no_network));
                             }else {
                                 Utils.print(AppConstants.LogTag,"error:"+e.getMessage()+e.getErrorCode());
                             }
@@ -235,12 +231,12 @@ public class Show_ShortActivity extends AppCompatActivity {
             @Override
             public void done(String objectId, BmobException e) {
                 if(e==null){
-                    Utils.showToast(Show_ShortActivity.this , getResources().getString(R.string.text_collection_success));
+                    Utils.showToast(ShowShortActivity.this , getResources().getString(R.string.text_collection_success));
                     short_toolbar.getMenu().findItem(R.id.action_collect).setIcon(R.mipmap.already_collected);//改变图标样式
                 }else {
-                    Utils.showToast(Show_ShortActivity.this, getResources().getString(R.string.text_collection_failure));
+                    Utils.showToast(ShowShortActivity.this, getResources().getString(R.string.text_collection_failure));
                     if(e.getErrorCode()==9016){
-                        Utils.showToast(Show_ShortActivity.this,getResources().getString(R.string.text_no_network));
+                        Utils.showToast(ShowShortActivity.this,getResources().getString(R.string.text_no_network));
                     }else {
                         Utils.print(AppConstants.LogTag, "收藏失败" + e.getMessage() + e.getErrorCode());
                     }
@@ -256,7 +252,7 @@ public class Show_ShortActivity extends AppCompatActivity {
             @Override
             public void done(BmobException e) {
                 if(e==null){
-                    Utils.showToast(Show_ShortActivity.this,getResources().getString(R.string.text_cancel_collection_success));
+                    Utils.showToast(ShowShortActivity.this,getResources().getString(R.string.text_cancel_collection_success));
                     short_toolbar.getMenu().findItem(R.id.action_collect).setIcon(R.mipmap.not_collect);//改变图标样式
                 }else{
                     Utils.print(AppConstants.LogTag,"失败："+e.getMessage()+","+e.getErrorCode());
@@ -272,7 +268,7 @@ public class Show_ShortActivity extends AppCompatActivity {
             @Override
             public void done(String objectId, BmobException e) {
                 if(e==null){
-                    Utils.showToast(Show_ShortActivity.this,getResources().getString(R.string.text_thumb_success));
+                    Utils.showToast(ShowShortActivity.this,getResources().getString(R.string.text_thumb_success));
                     String praiseCount=questionBankDB.getPRAISE()+1+"";
                     show_short_praise_count.setText(praiseCount);
                     QuestionBank questionBank=new QuestionBank();
@@ -295,7 +291,7 @@ public class Show_ShortActivity extends AppCompatActivity {
                     show_short_praise_btn.setBackgroundResource(R.mipmap.been_praised);
                 }else{
                     if(e.getErrorCode()==9016){
-                        Utils.showToast(Show_ShortActivity.this,getResources().getString(R.string.text_no_network));
+                        Utils.showToast(ShowShortActivity.this,getResources().getString(R.string.text_no_network));
                     }else {
                         Utils.print(AppConstants.LogTag, "error:" + e.getMessage() + "," + e.getErrorCode());
                     }

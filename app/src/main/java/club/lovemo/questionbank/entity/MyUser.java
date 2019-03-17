@@ -8,4 +8,5 @@ import cn.bmob.v3.BmobUser;
 
 public class MyUser extends BmobUser {
     private String work;
+    private int user_type;
 }

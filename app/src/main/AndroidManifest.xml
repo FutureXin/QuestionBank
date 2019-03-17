@@ -36,11 +36,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".lovemo.QuestionListActivity" />
-        <activity android:name=".lovemo.Show_ChoiceActivity" />
-        <activity android:name=".lovemo.Show_GapActivity" />
-        <activity android:name=".lovemo.Show_JudgeActivity" />
-        <activity android:name=".lovemo.Show_ShortActivity" />
-        <activity android:name=".lovemo.Choice_Activity" />
+        <activity android:name=".lovemo.MainActivity" />
+        <activity android:name=".lovemo.ShowChoiceActivity" />
+        <activity android:name=".lovemo.ShowGapActivity" />
+        <activity android:name=".lovemo.ShowJudgeActivity" />
+        <activity android:name=".lovemo.ShowShortActivity" />
+        <activity android:name=".lovemo.ChoiceActivity" />
         <activity android:name=".lovemo.FeedbackActivity" />
         <activity android:name=".lovemo.LoginActivity" />
         <activity android:name=".lovemo.RegisteredActivity" />

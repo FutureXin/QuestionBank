@@ -2,7 +2,6 @@ package club.lovemo.questionbank.lovemo;
 
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,11 +12,10 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+
+import java.lang.ref.WeakReference;
 
 import club.lovemo.questionbank.R;
 import club.lovemo.questionbank.entity.MyUser;
@@ -42,49 +40,80 @@ public class RegisteredActivity extends AppCompatActivity{
     private EditText password2;
     private EditText user_email;
     private int statusBarHeight;
-    private ProgressDialog dialog;
-    private Handler mHandler=new Handler(){
+    private static ProgressDialog dialog;
+    private static class MyHandler extends Handler{
+        private final WeakReference<RegisteredActivity> mActivity;
+        private MyHandler(RegisteredActivity activity){
+            mActivity = new WeakReference<>(activity);
+        }
         public void handleMessage(Message msg){
+            RegisteredActivity activity=mActivity.get();
             dialog.cancel();
             switch (msg.what) {
                 case REG_SUCCESS:
-                    Utils.showToast(RegisteredActivity.this,"注册成功");
-                    finish();
+                    Utils.showToast(activity,"注册成功");
+                    activity.finish();
                     break;
                 case NO_NETWORK:
-                    Utils.showToast(RegisteredActivity.this,"无网络，请联网后进行操作！");
+                    Utils.showToast(activity,"无网络，请联网后进行操作！");
                     break;
                 case USERNAME_DISABLED:
-                    Utils.showToast(RegisteredActivity.this,"该用户名已被注册，请更换其它用户名！");
+                    Utils.showToast(activity,"该用户名已被注册，请更换其它用户名！");
                     break;
                 case EMAIL_DISABLED:
-                    Utils.showToast(RegisteredActivity.this,"该邮箱已用于注册，请更换其它邮箱！");
+                    Utils.showToast(activity,"该邮箱已用于注册，请更换其它邮箱！");
                     break;
                 case EMAIL_ERROR:
-                    Utils.showToast(RegisteredActivity.this,"电子邮件必须是有效的！");
+                    Utils.showToast(activity,"电子邮件必须是有效的！");
                     break;
                 default:
                     break;
             }
         }
-    };
+    }
+//    private Handler mHandler=new Handler(){
+//        public void handleMessage(Message msg){
+//            dialog.cancel();
+//            switch (msg.what) {
+//                case REG_SUCCESS:
+//                    Utils.showToast(RegisteredActivity.this,"注册成功");
+//                    finish();
+//                    break;
+//                case NO_NETWORK:
+//                    Utils.showToast(RegisteredActivity.this,"无网络，请联网后进行操作！");
+//                    break;
+//                case USERNAME_DISABLED:
+//                    Utils.showToast(RegisteredActivity.this,"该用户名已被注册，请更换其它用户名！");
+//                    break;
+//                case EMAIL_DISABLED:
+//                    Utils.showToast(RegisteredActivity.this,"该邮箱已用于注册，请更换其它邮箱！");
+//                    break;
+//                case EMAIL_ERROR:
+//                    Utils.showToast(RegisteredActivity.this,"电子邮件必须是有效的！");
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    };
+    private final MyHandler mHandler = new MyHandler(this);
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reg);
 
-        Button login_btn=(Button)findViewById(R.id.reg_login);
-        Button reg_btn=(Button)findViewById(R.id.reg_reg);
-        username=(EditText) findViewById(R.id.et_reg_username);
-        password=(EditText) findViewById(R.id.et_reg_user_password);
-        password2=(EditText) findViewById(R.id.et_reg_user_password2);
+        Button login_btn=findViewById(R.id.reg_login);
+        Button reg_btn= findViewById(R.id.reg_reg);
+        username= findViewById(R.id.et_reg_username);
+        password= findViewById(R.id.et_reg_user_password);
+        password2= findViewById(R.id.et_reg_user_password2);
         //设置hint字体
         password.setTypeface(Typeface.DEFAULT);
         password.setTransformationMethod(new PasswordTransformationMethod());
         //设置hint字体
         password2.setTypeface(Typeface.DEFAULT);
         password2.setTransformationMethod(new PasswordTransformationMethod());
-        user_email=(EditText) findViewById(R.id.et_reg_user_email);
+        user_email= findViewById(R.id.et_reg_user_email);
         //返回登录界面
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +167,7 @@ public class RegisteredActivity extends AppCompatActivity{
                 }
             }
         });
-        Toolbar reg_toolbar=(Toolbar)findViewById(R.id.reg_toolbar);
+        Toolbar reg_toolbar= findViewById(R.id.reg_toolbar);
         reg_toolbar.setNavigationIcon(R.mipmap.back);
         setSupportActionBar(reg_toolbar);
         if(getSupportActionBar()!=null){

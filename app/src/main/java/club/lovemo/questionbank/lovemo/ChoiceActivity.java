@@ -15,7 +15,7 @@ import club.lovemo.questionbank.R;
 import club.lovemo.questionbank.utils.BaseViewHolder;
 import club.lovemo.questionbank.utils.MyGridView;
 
-public class Choice_Activity extends AppCompatActivity {
+public class ChoiceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -25,8 +25,8 @@ public class Choice_Activity extends AppCompatActivity {
     }
 
     private void initView() {
-        MyGridView grid_view=(MyGridView) findViewById(R.id.grid_view);
-        MyGridView grid_view2=(MyGridView) findViewById(R.id.grid_view2);
+        MyGridView grid_view= findViewById(R.id.grid_view);
+        MyGridView grid_view2= findViewById(R.id.grid_view2);
         grid_view.setAdapter(baseAdapter_j);
         grid_view2.setAdapter(baseAdapter_l);
 
@@ -34,27 +34,27 @@ public class Choice_Activity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id){
                 //Utils.showToast(mContext,""+id);
                 //Toast.makeText(mContext, "你点击了第" + position + "项", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(Choice_Activity.this, QuestionListActivity.class));
+//                startActivity(new Intent(ChoiceActivity.this, QuestionListActivity.class));
 //                finish();
-                Choice_Activity.this.setResult(position);
-                Choice_Activity.this.finish();
-                Choice_Activity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                ChoiceActivity.this.setResult(position);
+                ChoiceActivity.this.finish();
+                ChoiceActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
             }
         });
         grid_view2.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-                Choice_Activity.this.setResult(position+ getResources().getStringArray(R.array.category_list_j).length);
-                Choice_Activity.this.finish();
-                Choice_Activity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                ChoiceActivity.this.setResult(position+ getResources().getStringArray(R.array.category_list_j).length);
+                ChoiceActivity.this.finish();
+                ChoiceActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
             }
         });
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) { //监控/拦截/屏蔽返回键
-            Choice_Activity.this.setResult(-1);
-            Choice_Activity.this.finish();
-            Choice_Activity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+            ChoiceActivity.this.setResult(-1);
+            ChoiceActivity.this.finish();
+            ChoiceActivity.this.overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -82,7 +82,7 @@ public class Choice_Activity extends AppCompatActivity {
       @Override
       public View getView(int position, View convertView, ViewGroup parent) {
           if (convertView == null) {
-              convertView = LayoutInflater.from(Choice_Activity.this).inflate(
+              convertView = LayoutInflater.from(ChoiceActivity.this).inflate(
                       R.layout.grid_item, parent, false);
           }
           TextView tv = BaseViewHolder.get(convertView, R.id.tv_item);
@@ -116,7 +116,7 @@ public class Choice_Activity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(Choice_Activity.this).inflate(
+                convertView = LayoutInflater.from(ChoiceActivity.this).inflate(
                         R.layout.grid_item, parent, false);
             }
             TextView tv = BaseViewHolder.get(convertView, R.id.tv_item);

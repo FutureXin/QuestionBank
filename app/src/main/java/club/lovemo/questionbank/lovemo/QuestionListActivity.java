@@ -35,7 +35,7 @@ import club.lovemo.questionbank.entity.Collection;
 import club.lovemo.questionbank.entity.MyUser;
 import club.lovemo.questionbank.entity.QuestionBank;
 import club.lovemo.questionbank.entity.QuestionBankDB;
-import club.lovemo.questionbank.entity.Type_Topic;
+import club.lovemo.questionbank.entity.TypeTopic;
 import club.lovemo.questionbank.utils.AppConstants;
 import club.lovemo.questionbank.utils.DBHelperUtils;
 import club.lovemo.questionbank.utils.SharedPreferencesUtils;
@@ -65,7 +65,7 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
     private AlertDialog dialog;
     private List<QuestionBank> questionBankList = new ArrayList<>();
     private List<QuestionBankDB> questionBankDBList = new ArrayList<>();
-    List<Type_Topic> All_Topic_List = new ArrayList<>();
+    List<TypeTopic> All_Topic_List = new ArrayList<>();
     static final int SEND_SMS_REQUEST = 0;
     static final int CALL_REQUEST = 1;
     public int category_id;
@@ -87,17 +87,17 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_list);
-        content_toolbar = (Toolbar) findViewById(R.id.content_toolbar);
-        tv_show_category = (TextView) findViewById(R.id.tv_title);
+        content_toolbar = findViewById(R.id.content_toolbar);
+        tv_show_category = findViewById(R.id.tv_title);
         myUser=BmobUser.getCurrentUser(MyUser.class);
-        no_data_text = (TextView) findViewById(R.id.no_data_text);
+        no_data_text = findViewById(R.id.no_data_text);
         my_view= LayoutInflater.from(this).inflate(R.layout.reset_password_dialog, null);
-        et_old_password=(EditText)my_view.findViewById(R.id.et_reset_old_password);
-        et_new_password=(EditText)my_view.findViewById(R.id.et_reset_new_password);
-        et_new_password2=(EditText)my_view.findViewById(R.id.et_reset_new_password2);
+        et_old_password= my_view.findViewById(R.id.et_reset_old_password);
+        et_new_password= my_view.findViewById(R.id.et_reset_new_password);
+        et_new_password2= my_view.findViewById(R.id.et_reset_new_password2);
         my_reset_email_view= LayoutInflater.from(this).inflate(R.layout.reset_email_dialog, null);
-        et_new_email=(EditText)my_reset_email_view.findViewById(R.id.et_reset_email);
-        et_reset_email_password=(EditText)my_reset_email_view.findViewById(R.id.et_reset_email_password);
+        et_new_email= my_reset_email_view.findViewById(R.id.et_reset_email);
+        et_reset_email_password= my_reset_email_view.findViewById(R.id.et_reset_email_password);
         et_reset_email_password.setTypeface(Typeface.DEFAULT);
         et_reset_email_password.setTransformationMethod(new PasswordTransformationMethod());
         //设置hint字体
@@ -112,9 +112,9 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
         Dialog();
         preferencesUtils = new SharedPreferencesUtils(QuestionListActivity.this);
         category_id = preferencesUtils.getCategoryID();
-        pb_progress = (ProgressBar) findViewById(R.id.pb_progress);
-        listView = (RefreshListView) findViewById(R.id.content_list);
-        et_search = (EditText) findViewById(R.id.content_search);
+        pb_progress = findViewById(R.id.pb_progress);
+        listView = findViewById(R.id.content_list);
+        et_search = findViewById(R.id.content_search);
         pb_progress.bringToFront();
         no_data_text.bringToFront();
 
@@ -139,11 +139,11 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                         if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                            // 先隐藏键盘
-                            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                                    .hideSoftInputFromWindow(QuestionListActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                            //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
-                            Search();
+                                // 先隐藏键盘
+                                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                                        .hideSoftInputFromWindow(QuestionListActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                                //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
+                                Search();
                         }
                         return false;
                     }
@@ -151,7 +151,7 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
         tv_show_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuestionListActivity.this, Choice_Activity.class);
+                Intent intent = new Intent(QuestionListActivity.this, ChoiceActivity.class);
                 startActivityForResult(intent, SEND_SMS_REQUEST);
                 QuestionListActivity.this.overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
@@ -220,7 +220,7 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
 
     private void Search() {
         String search = et_search.getText().toString().trim();
-        List<Type_Topic> Search_list = new ArrayList<>();
+        List<TypeTopic> Search_list = new ArrayList<>();
         if (!search.equals("")) {
             getDBDataList();
             Utils.print(AppConstants.LogTag, "搜索" + search);
@@ -230,7 +230,7 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
 //                                Search_list.add(All_Topic_List.get(i));
 //                            }
 //                        }
-                for (Type_Topic type_Topic : All_Topic_List) {
+                for (TypeTopic type_Topic : All_Topic_List) {
                     if (type_Topic.getTopic().contains(search)) {
                         Search_list.add(type_Topic);
                     }
@@ -351,7 +351,7 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
             All_Topic_List.clear();
         }
         for (int i = 0; i < object.size(); i++) {
-            Type_Topic type_topic = new Type_Topic();
+            TypeTopic type_topic = new TypeTopic();
             type_topic.setObjectId(object.get(i).getQuestionId());
             type_topic.setType(object.get(i).getType());
             type_topic.setTopic(object.get(i).getTopic());
@@ -372,7 +372,7 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
             All_Topic_List.clear();
         }
         for (int i = 0; i < questionBankList.size(); i++) {
-            Type_Topic type_topic = new Type_Topic();
+            TypeTopic type_topic = new TypeTopic();
             type_topic.setObjectId(questionBankList.get(i).getObjectId());
             type_topic.setType(questionBankList.get(i).getQUESTION_TYPE());
             type_topic.setTopic(questionBankList.get(i).getTOPIC());
@@ -431,20 +431,20 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
                             Intent choice_intent = new Intent();
                             choice_intent.putExtra("id", All_Topic_List.get(i).getObjectId());
                             //                    intent.putExtra("",questionBankDBList.get(i));
-                            choice_intent.setClass(QuestionListActivity.this, Show_ChoiceActivity.class);
+                            choice_intent.setClass(QuestionListActivity.this, ShowChoiceActivity.class);
                             QuestionListActivity.this.startActivity(choice_intent);
                             QuestionListActivity.this.overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                             break;
                         case "判断题":
                             Intent judge_intent = new Intent();
                             judge_intent.putExtra("id", All_Topic_List.get(i).getObjectId());
-                            judge_intent.setClass(QuestionListActivity.this, Show_JudgeActivity.class);
+                            judge_intent.setClass(QuestionListActivity.this, ShowJudgeActivity.class);
                             QuestionListActivity.this.startActivity(judge_intent);
                             QuestionListActivity.this.overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                             break;
                         case "简答题":
                             Intent short_intent = new Intent();
-                            short_intent.setClass(QuestionListActivity.this, Show_ShortActivity.class);
+                            short_intent.setClass(QuestionListActivity.this, ShowShortActivity.class);
                             short_intent.putExtra("id", All_Topic_List.get(i).getObjectId());
                             QuestionListActivity.this.startActivity(short_intent);
                             QuestionListActivity.this.overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
@@ -452,7 +452,7 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
                         default:
                             Intent gap_intent = new Intent();
                             gap_intent.putExtra("id", All_Topic_List.get(i).getObjectId());
-                            gap_intent.setClass(QuestionListActivity.this, Show_GapActivity.class);
+                            gap_intent.setClass(QuestionListActivity.this, ShowGapActivity.class);
                             QuestionListActivity.this.startActivity(gap_intent);
                             QuestionListActivity.this.overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                             break;
@@ -515,14 +515,14 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
         }
         All_Topic_List.clear();
         for (int i = 0; i < questionBankDBList.size(); i++) {
-            All_Topic_List.add(new Type_Topic(questionBankDBList.get(i).getObjectId(), questionBankDBList.get(i).getQUESTION_TYPE(), questionBankDBList.get(i).getTOPIC(),questionBankDBList.get(i).getPRAISE(),false));
+            All_Topic_List.add(new TypeTopic(questionBankDBList.get(i).getObjectId(), questionBankDBList.get(i).getQUESTION_TYPE(), questionBankDBList.get(i).getTOPIC(),questionBankDBList.get(i).getPRAISE(),false));
         }
         if (category_id >= getResources().getStringArray(R.array.category_list_j).length) {
             tv_show_category.setText(getResources().getStringArray(R.array.category_list_l)[category_id - getResources().getStringArray(R.array.category_list_j).length]);
         } else {
             tv_show_category.setText(getResources().getStringArray(R.array.category_list_j)[category_id]);
         }
-
+        Check_category();
     }
 
     public void Notify() {
@@ -760,10 +760,10 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
             if (convertView == null) {
                 convertView = View.inflate(QuestionListActivity.this, R.layout.item_showlist, null);
                 holder = new ViewHolder();
-                holder.tv_list_type = (TextView) convertView.findViewById(R.id.item_show_type);
-                holder.tv_list_topic = (TextView) convertView.findViewById(R.id.item_show_topic);
-                holder.tv_list_praise=(TextView)convertView.findViewById(R.id.item_show_praise);
-                holder.praise_image=(ImageView)convertView.findViewById(R.id.item_show_praise_image);
+                holder.tv_list_type = convertView.findViewById(R.id.item_show_type);
+                holder.tv_list_topic = convertView.findViewById(R.id.item_show_topic);
+                holder.tv_list_praise= convertView.findViewById(R.id.item_show_praise);
+                holder.praise_image= convertView.findViewById(R.id.item_show_praise_image);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();

@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by John.
  */
 
-public class Personal_CenterActivity extends AppCompatActivity{
+public class PersonalCenterActivity extends AppCompatActivity{
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

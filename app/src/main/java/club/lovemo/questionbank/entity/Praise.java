@@ -4,6 +4,7 @@ import cn.bmob.v3.BmobObject;
 
 /**
  * Created by John.
+ * 点赞类
  */
 
 public class Praise extends BmobObject {

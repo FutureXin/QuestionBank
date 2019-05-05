@@ -51,7 +51,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final int SEND_EMAIL_ERROR=5;
     private static final int NO_NETWORK = 6;
     private static final int GET_EMAIL_ERROR = 7;
-    private static final String APP_ID = "b7c43259f2ef61c78d4f56f5292ac405";
+    private static final String APP_ID = "You Bmob App_ID";
     private static final boolean DEVELOPER_MODE = true;
     private PermissionManager helper;
     private AlertDialog email_dialog;
